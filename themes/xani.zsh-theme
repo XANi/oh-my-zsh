@@ -9,6 +9,7 @@ source  /usr/lib/git-core/git-sh-prompt
 setopt PROMPT_SUBST
 autoload -U regexp-replace
 no_processors=$(cat /proc/cpuinfo | grep ^processor|wc -l)
+HOSTNAME=`hostname`
 home_host_regex='^(ghroth|erise|arkham|vm-debian|hydra)'
 
 # fallback default
@@ -89,3 +90,8 @@ RPROMPT='$(pipe_status)'
 #ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%}"
 #ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*%{$fg[green]%}"
 #ZSH_THEME_GIT_PROMPT_CLEAN=""
+if [[ $HOSTNAME =~  $home_host_regex ]]; then
+  ZSH_THEME_TERM_TITLE_IDLE="%~ [%n]"
+else
+  ZSH_THEME_TERM_TITLE_IDLE="[%n@%m]:%~"
+fi
